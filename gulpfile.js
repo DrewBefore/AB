@@ -77,7 +77,7 @@ function watchTask(){
 
 function deploy() {
     return src('./dist/**/*')
-        .pipe(ghPages({branch: 'master'}));
+        .pipe(ghPages());
 }
 
 // BrowserSync Reload
