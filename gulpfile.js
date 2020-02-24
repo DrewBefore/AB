@@ -1,8 +1,6 @@
-// Initialize modules
-// Importing specific gulp API functions lets us write them below as series() instead of gulp.series()
 const { src, dest, watch, series, parallel } = require('gulp');
-// Importing all the Gulp-related packages we want to use
 const sourcemaps = require('gulp-sourcemaps');
+const del = require('del');
 const sass = require('gulp-sass');
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
@@ -17,13 +15,17 @@ var browserSync = require('browser-sync').create();
 const files = { 
     scssPath: 'src/scss/**/*.scss',
     jsPath: 'src/js/**/*.js',
-    htmlPath: 'src/pages/**/*.html'
+    htmlPath: 'src/pages/**/*.html',
+    assetsPath: 'src/assets/**/*'
 }
 
 // Sass task: compiles the style.scss file into style.css
 function scssTask(){    
     return src(files.scssPath)
+        .pipe(sourcemaps.init()) // initialize sourcemaps first
         .pipe(sass()) // compile SCSS to CSS
+        .pipe(postcss([ autoprefixer(), cssnano() ])) // PostCSS plugins
+        .pipe(sourcemaps.write('.')) // write sourcemaps file in current directory
         .pipe(dest('dist')
     ); // put final CSS in dist folder
 }
@@ -44,6 +46,17 @@ function cacheBustTask(){
         .pipe(replace(/cb=\d+/g, 'cb=' + cbString))
         .pipe(dest('dist'))
         .pipe(browserSync.stream());
+}
+
+// Copy
+function copy() {
+    return src([files.assetsPath])
+        .pipe(dest('dist/assets/'));
+}
+
+// Clean
+function clean() {
+    return del(["dist/"]);
 }
 
 // Watch task: watch SCSS and JS files for changes
@@ -71,7 +84,11 @@ function reload(done) {
 // Runs the scss and js tasks simultaneously
 // then runs cacheBust, then watch task
 exports.default = series(
-    parallel(scssTask, jsTask), 
+    clean,
+    parallel(scssTask, jsTask, copy), 
     cacheBustTask,
     watchTask
 );
+
+exports.copy = copy;
+exports.clean = clean;
