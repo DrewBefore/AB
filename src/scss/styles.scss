@@ -1,0 +1,95 @@
+* {
+    box-sizing: border-box;
+}
+
+.nav {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    .nav-logo {
+        display: flex;
+        margin-right: auto;
+        border: 1px solid red;
+    }
+    .nav-links {
+        display: flex;
+        flex: 1;
+        justify-content: flex-end;
+        list-style-type: none;
+        li {
+            margin: 0 1em;
+            border: 1px solid green;
+        }
+    }
+}
+
+.main-container {
+    padding: 5em 0;
+    .project-list {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        padding: 0;
+        flex-basis: 100%;
+        li.project {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            list-style: none;
+            min-height: 5em;
+            &:nth-of-type(1) {
+                margin-bottom: 2em;
+            }
+            .description {
+                display: flex;
+                justify-content: flex-end;
+                margin-right: 4em;
+            }
+            .title {
+                display: flex;
+                align-self: stretch;
+                border-left: 5px solid gray;
+                transition: .3s;
+                transition-timing-function: ease-out;
+                &:hover {
+                    color: green;
+                    font-weight: bold;
+                    border: 1px solid green;
+                    border-left: 10px solid green;
+                    cursor: pointer;
+                    transition: .3s;
+                    transition-timing-function: ease-in;
+                    
+                    background: lightgreen;
+                }
+            }
+        }
+    }
+}
+
+.flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &.full {
+        flex-basis: 100%;
+    }
+    &.half {
+        flex-basis: 50%;
+    }
+    &.third {
+        flex-basis: 33.33%;
+    }
+    &.fourth {
+        flex-basis: 25%;
+    }
+    &.fifth {
+        flex-basis: 20%;
+    }
+}
+
+.wrapper {
+    max-width: 1366px;
+    margin: 0 auto;
+}
