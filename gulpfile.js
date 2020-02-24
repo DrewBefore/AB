@@ -6,6 +6,7 @@ const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
 const postcss = require('gulp-postcss');
 const autoprefixer = require('autoprefixer');
+const ghPages = require('gulp-gh-pages');
 const cssnano = require('cssnano');
 var replace = require('gulp-replace');
 var browserSync = require('browser-sync').create();
@@ -74,6 +75,11 @@ function watchTask(){
     );    
 }
 
+function deploy() {
+    return src('./dist/**/*')
+        .pipe(ghPages({branch: 'master'}));
+}
+
 // BrowserSync Reload
 function reload(done) {
     browserSync.reload();
@@ -90,5 +96,12 @@ exports.default = series(
     watchTask
 );
 
+exports.prod = series(
+    clean,
+    parallel(scssTask, jsTask, copy), 
+    cacheBustTask,
+);
+
 exports.copy = copy;
 exports.clean = clean;
+exports.deploy = deploy;
