@@ -2,7 +2,7 @@
 
 ## Setup
 - Have [node](https://nodejs.org/en/download/) installed 
-- Clone this repo
+- Clone this repo: `git clone https://github.com/DrewBefore/AndyPort.git`
 - Open a terminal to the folder you downloaded when you cloned the repo
 - From the root folder of the projct run `npm install`
 - Install gulp globally -
