@@ -16,7 +16,7 @@ var browserSync = require('browser-sync').create();
 const files = { 
     scssPath: 'src/scss/**/*.scss',
     jsPath: 'src/js/**/*.js',
-    htmlPath: 'src/pages/**/*.html',
+    htmlPath: 'src/**/*.html',
     assetsPath: 'src/assets/**/*'
 }
 
